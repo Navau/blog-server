@@ -55,6 +55,54 @@ function getPosts(req, res) {
   });
 }
 
+function getPostsSprint(req, res) {
+  const query = req.query; //OBTENEMOS LO QUE MANDAMOS EN LA PETICION
+
+  Post.find({
+    sprint: query.sprint, //INDICAMOS QUE BUSQUE LOS USUARIOS QUE TENGAN EL VALOR DE ACTIVE EN TRUE O FALSE, en la URl se manda http://localhost:3977/api/v1/users-active?active=false o puede tener tambien el valor de true
+  })
+    .then((posts) => {
+      if (!posts) {
+        res.status(404).send({
+          code: 404,
+          message: "No se ha encontrado ningun Post",
+          posts,
+        });
+      } else {
+        res.status(200).send({
+          code: 200,
+          message: `Posts obtenidos del sprint ${query.sprint} correctamente`,
+          posts,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({ code: 500, message: "Error del servidor.", err });
+    });
+}
+
+function getAllPosts(req, res) {
+  Post.find()
+    .then((posts) => {
+      if (!posts) {
+        res.status(404).send({
+          code: 404,
+          message: "No se ha encontrado ningun Post",
+          posts,
+        });
+      } else {
+        res.status(200).send({
+          code: 200,
+          message: `Posts obtenidos correctamente`,
+          posts,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({ code: 500, message: "Error del servidor.", err });
+    });
+}
+
 function updatePost(req, res) {
   const postData = req.body;
   const { id } = req.params;
@@ -132,4 +180,6 @@ module.exports = {
   updatePost,
   deletePost,
   getPost,
+  getPostsSprint,
+  getAllPosts,
 };

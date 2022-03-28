@@ -10,6 +10,7 @@ const PostSchema = Schema({
     unique: true,
   },
   sprint: Number,
+  history: Number,
   description: String,
   date: Date,
 });
