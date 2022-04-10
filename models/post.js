@@ -15,6 +15,8 @@ const PostSchema = Schema({
   date: Date,
 });
 
+//TODO: Poner Historia al Modelo
+
 PostSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Post", PostSchema);
